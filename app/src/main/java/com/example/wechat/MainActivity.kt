@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -21,10 +22,10 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            WeTheme {
+            WeTheme(theme = WeTheme.Theme.NewYear) {
                 Column(Modifier.padding(8.dp)) {
                     val viewModel: WeViewModel = viewModel()
-                    HorizontalPager(PagerState(4)){ page: Int ->
+                    HorizontalPager(PagerState(4, currentPage = viewModel.selectedTab),Modifier.weight(1f), verticalAlignment = Alignment.Top){ page: Int ->
                         when(page){
                             0-> ChatList(viewModel.chats)
                             1->Box(Modifier.fillMaxWidth())

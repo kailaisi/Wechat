@@ -8,5 +8,5 @@ data class Chat(var friend: User, var msgs: MutableList<Msg>) {
 }
 
 data class Msg(val from: User, val text: String) {
-  var read: Boolean by mutableStateOf(false)
+  var read: Boolean by mutableStateOf(true)
 }

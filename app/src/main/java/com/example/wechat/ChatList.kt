@@ -4,8 +4,12 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Divider
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawWithContent
@@ -14,6 +18,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.wechat.R.drawable
 import com.example.wechat.data.Chat
 import com.example.wechat.data.Msg
@@ -25,30 +30,54 @@ import com.example.wechat.ui.theme.WeTheme.Theme.Light
 fun ChatList(chats: List<Chat>) {
     Box(Modifier.fillMaxWidth())
     LazyColumn {
-        items(chats) { chat ->
-            Row {
+        itemsIndexed(chats) { index, chat ->
+            Row(Modifier.fillMaxWidth()) {
                 Image(
                     painter = painterResource(id = chat.friend.avatar),
                     contentDescription = chat.friend.name,
                     Modifier
                         .padding(4.dp)
                         .size(48.dp)
-                        .unread(!chat.msgs.last().read)
+                        .unread(!chat.msgs.last().read, WeTheme.colors.badge)
                         .clip(
                             RoundedCornerShape(4.dp)
                         )
                 )
-
+                Column(
+                    Modifier
+                        .weight(1f)
+                        .align(Alignment.CenterVertically)
+                ) {
+                    Text(
+                        text = chat.friend.name,
+                        fontSize = 17.sp,
+                        color = WeTheme.colors.textPrimary
+                    )
+                    Text(
+                        text = chat.msgs.last().text,
+                        fontSize = 14.sp,
+                        color = WeTheme.colors.textSecondary
+                    )
+                }
+                Text(
+                    chat.msgs.last().text,
+                    Modifier.padding(vertical = 8.dp, horizontal = 12.dp),
+                    fontSize = 11.sp,
+                    color = WeTheme.colors.textSecondary
+                )
+            }
+            if (index <= chats.size) {
+                Divider()
             }
         }
     }
 }
 
-fun Modifier.unread(show:Boolean):Modifier=this.drawWithContent {
+fun Modifier.unread(show: Boolean, color: Color): Modifier = this.drawWithContent {
     drawContent()
-    if(show) {
+    if (show) {
         drawCircle(
-            Color.Red,
+            color,
             5.dp.toPx(),
             Offset(size.width - 1.dp.toPx(), 1.dp.toPx())
         )
@@ -82,6 +111,7 @@ fun ChatListPreview() {
                     mutableListOf(
                         Msg(User("diuwuxian", "丢物线", drawable.avatar_diuwuxian), "哈哈哈"),
                         Msg(User.Me, "你笑个屁呀"),
+                        Msg(User("diuwuxian", "丢物线", drawable.avatar_diuwuxian), "哈哈哈"),
                     )
                 ),
             )

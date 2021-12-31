@@ -1,6 +1,7 @@
 package com.example.wechat
 
 import androidx.annotation.DrawableRes
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
@@ -22,7 +23,7 @@ import androidx.compose.runtime.setValue
 
 @Composable
 fun WeBottomBar(selectIndex: Int, onTap: (Int) -> Unit) {
-    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceAround) {
+    Row(modifier = Modifier.fillMaxWidth().background(WeTheme.colors.bottomBar), horizontalArrangement = Arrangement.SpaceAround) {
         TabItem(
             if (selectIndex == 0) drawable.ic_chat_filled else drawable.ic_chat_outlined,
             "微信",
