@@ -12,7 +12,7 @@ import com.example.wechat.ui.theme.WeTheme
 
 
 class WeViewModel : ViewModel() {
-    var selectedTab  by mutableStateOf(0)
+    var selectedTab by mutableStateOf(0)
 
     var chats by mutableStateOf(
         listOf(
@@ -23,7 +23,10 @@ class WeViewModel : ViewModel() {
                     Msg(User.Me, "汗滴禾下土"),
                     Msg(User("gaolaoshi", "高老师", drawable.avatar_gaolaoshi), "谁知盘中餐"),
                     Msg(User.Me, "粒粒皆辛苦"),
-                    Msg(User("gaolaoshi", "高老师", drawable.avatar_gaolaoshi), "唧唧复唧唧，木兰当户织。不闻机杼声，惟闻女叹息。"),
+                    Msg(
+                        User("gaolaoshi", "高老师", drawable.avatar_gaolaoshi),
+                        "唧唧复唧唧，木兰当户织。不闻机杼声，惟闻女叹息。"
+                    ),
                     Msg(User.Me, "双兔傍地走，安能辨我是雄雌？"),
                     Msg(User("gaolaoshi", "高老师", drawable.avatar_gaolaoshi), "床前明月光，疑是地上霜。"),
                     Msg(User.Me, "吃饭吧？"),
@@ -50,11 +53,13 @@ class WeViewModel : ViewModel() {
         private set
 
     fun startChat(chat: Chat) {
+        println("startChat")
         currentChat = chat
         openModule = Module.Chat
     }
 
     fun endChat() {
+        currentChat = null
         openModule = null
     }
 
